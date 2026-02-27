@@ -36,5 +36,6 @@ COPY --chown=node:node tmux.conf /home/node/.config/tmux/tmux.conf
 USER node
 WORKDIR /home/node
 
-# Default: attach or create a named tmux session
-CMD ["bash", "-c", "tmux new-session -A -s main"]
+# Start a detached tmux session and keep the container alive.
+# Attach via: kubectl exec -it <pod> -- tmux attach -t main
+CMD ["bash", "-c", "tmux new-session -d -s main 2>/dev/null; exec sleep infinity"]
